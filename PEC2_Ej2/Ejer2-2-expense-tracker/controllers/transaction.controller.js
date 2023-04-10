@@ -18,15 +18,15 @@ class TransactionController {
         this.view.bindDeleteTransaction(this.handleDeleteTransaction);
 
         // Display initial transactions
-        this.onTransactionListChanged(this.service.transactions);
+        this.onTransactionListChanged(this.service.transactions, this.service.getTotal(), this.service.getIncome(), this.service.getExpense());
     }
 
-    onTransactionListChanged = transactions => {
-        this.view.displayTransactions(transactions);
+    onTransactionListChanged = (transactions, total, income, expense) => {
+        this.view.displayTransactions(transactions, total, income, expense);
     }
 
-    handleAddTransaction = transactionText => {
-        this.service.addTransaction(transactionText)
+    handleAddTransaction = (transactionText, transactionValue) => {
+        this.service.addTransaction(transactionText, transactionValue)
     }
 
     handleDeleteTransaction = id => {
