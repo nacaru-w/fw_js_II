@@ -1,9 +1,17 @@
 function multiplyBy10(array) {
-  // your code here
+  return array.map(element => element * 10);
 }
 
 function shiftRight(array) {
-  // your code here
+  let finalArray = []
+  array.map(element => {
+    if (element == array[array.length - 1]) {
+      finalArray.unshift(element);
+    } else {
+      finalArray.push(element)
+    }
+  }
+  )
 }
 
 function onlyVowels(array) {
