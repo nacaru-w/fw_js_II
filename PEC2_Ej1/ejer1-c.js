@@ -1,8 +1,8 @@
-const findOne = (list, { key, value }) => { // Aquí en lugar de como pasaba en el ejercicio anterior, no pasamos los callbacks como argumentos
-    return new Promise((resolve, reject) => { // Aquí usamos un constructor de promesa, al que le pasaremos como argumentos las funciones que representan lo que ocurre cuando al promesa es resuelta (fulfilled) o rechazada (rejected).
-        setTimeout(() => { // De nuevo usamos el método setTimeout para simular una operación asíncrona
+const findOne = (list, { key, value }) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
             const element = list.find(element => element[key] === value);
-            element ? resolve(element) : reject({ msg: 'ERROR: Element Not Found' }); // Aquí se llama a las funciones de resolución o rechazo de forma similar a cómo se hacía en el ejercicio previo pero utilizando las funciones del constructor de promesas.
+            element ? resolve(element) : reject({ msg: 'ERROR: Element Not Found' });
         }, 2000);
     });
 };
@@ -22,26 +22,25 @@ const users = [
 ];
 
 console.log('findOne success');
-
-async function findOneSuccess() {
-    try {
-        const user = await findOne(users, { key: 'name', value: 'Carlos' });
-        onSuccess(user);
+async function findOneSuccess() { // Aquí se crea la función findOneSuccess, usando async function como declaración de la misma, esto nos permitirá más tarde añadir el operador await
+    try { // el .then y .catch se ha sustituido por try/catch, ya que la asincronía es producida por async/await en lugar de esos métodos
+        const user = await findOne(users, { key: 'name', value: 'Carlos' }); // Aquí, await para la ejecución del código hasta que resuelve la función findOne
+        onSuccess(user); // Aquí se llama a la función onSuccess que imprimirá por pantalla «user: Carlos» 
     } catch (error) {
         onError(error);
     }
 }
 
-console.log('findOne error');
-findOne(users, { key: 'name', value: 'Fermin' })
-    .then(onSuccess)
-    .catch(onError); // Esta función, sin embargo, ejecutará el error al obtenerse un reject en la ejecución de findOne, por lo que imprimirá «ERROR: Element Not Found»
+findOneSuccess() // Llamada a la función 
 
-async function findOneError() {
+console.log('findOne error');
+async function findOneError() { // De forma similar al caso superior, aquí se usa async para poder añadir await posteriormente
     try {
-        const user = await findOne(users, { key: 'name', value: 'Fermin' });
+        const user = await findOne(users, { key: 'name', value: 'Fermin' }); // Aquí le pasamos a la función findOne un valor que no se encuentra en la la lista users
         onSuccess(user);
-    } catch (error) {
-        onError(error);
+    } catch (error) { // por lo que en la ejecución de la promesa devolverá un mensaje de error que será recuperado por este catch
+        onError(error); // y aquí llamará a la función OnError que imprimirá por pantalla el mensaje de error «ERROR: Element Not Found»
     }
-};
+}
+
+findOneError() // Llamada a la función 
