@@ -161,15 +161,65 @@ function animalByName(animalName) {
 }
 
 function employeesByIds(ids) {
-  // your code here
+  let idsArr = []
+
+  if (!ids) {
+    return idsArr
+  }
+
+  if (typeof ids == "string") {
+    idsArr.push(ids)
+  } else {
+    idsArr.push(...ids)
+  }
+
+  let finalArr = []
+
+  for (entry of employees) {
+    for (singleId of idsArr) {
+      if (singleId == entry.id) {
+        finalArr.push(entry)
+      }
+    }
+  }
+
+  return finalArr
+
 }
 
 function employeeByName(employeeName) {
-  // your code here
+  let empObj = {};
+  if (!employeeName) {
+    return empObj
+  }
+
+  for (let entry of employees) {
+    if (entry.firstName == employeeName || entry.lastName == employeeName) {
+      return entry
+    }
+  }
+
 }
 
 function managersForEmployee(idOrName) {
-  // your code here
+  function findFullNameWithID(givenId) {
+    for (let entry of employees) {
+      if (givenId == entry.id) {
+        return `${entry.firstName} ${entry.lastName}`
+      }
+    }
+  }
+
+  let finalObj = {}
+
+  for (let entry of employees) {
+    if (idOrName == entry.id || idOrName == entry.firstName || idOrName == entry.lastName) {
+      finalObj = entry
+      finalObj.managers = finalObj.managers.map(element => findFullNameWithID(element))
+      return finalObj
+    }
+  }
+
 }
 
 function employeeCoverage(idOrName) {
