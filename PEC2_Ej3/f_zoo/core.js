@@ -52,14 +52,6 @@ function animalCount(species) {
 }
 
 function animalMap(options) {
-  function nameExtractor(array) {
-    let nameList = [];
-    for (entry of array) {
-      nameList.push(entry.name)
-    }
-    return nameList
-  }
-
   let addToArray = function (arr, entry) {
     arr.push(entry.name)
   }
