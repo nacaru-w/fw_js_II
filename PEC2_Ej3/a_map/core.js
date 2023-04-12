@@ -10,16 +10,16 @@ function shiftRight(array) {
     } else {
       finalArray.push(element)
     }
-  }
-  )
+  })
+  return finalArray
 }
 
 function onlyVowels(array) {
-  // your code here
+  return array.map(element => element.replace(/[^aeiouàáâãäåæèéêëìíîïðñòóôõöøùúûüýÿ]/gi, ""))
 }
 
 function doubleMatrix(array) {
-  // your code here
+  return array.map(element => element.map(element => element * 2))
 }
 
 module.exports = {
