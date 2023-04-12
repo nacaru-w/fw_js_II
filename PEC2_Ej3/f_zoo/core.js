@@ -22,29 +22,80 @@ function schedule(dayName) {
     return time > 12 ? time - 12 : time;
   }
 
-  let finalObject = {}
+  let fullScheduleObj = {}
   for (day in hours) {
     if (day !== "Monday") {
-      finalObject[day] = `Open from ${hours[day].open}am until ${hourConverter(hours[day].close)}pm`
+      fullScheduleObj[day] = `Open from ${hours[day].open}am until ${hourConverter(hours[day].close)}pm`
     } else {
-      finalObject[day] = 'CLOSED'
+      fullScheduleObj[day] = 'CLOSED'
     }
   }
 
   if (!dayName) {
-    return finalObject
+    return fullScheduleObj
   }
 
-  return { [dayName]: finalObject[dayName] }
-
+  return { [dayName]: fullScheduleObj[dayName] }
 }
 
 function animalCount(species) {
-  // your code here
+  let animalCountObj = {};
+  for (entry of animals) {
+    animalCountObj[entry.name] = entry.residents.length
+  }
+
+  if (!species) {
+    return animalCountObj
+  }
+
+  return animalCountObj[species]
 }
 
 function animalMap(options) {
-  // your code here
+  function nameExtractor(array) {
+    let nameList = [];
+    for (entry of array) {
+      nameList.push(entry.name)
+    }
+    return nameList
+  }
+
+  let addToArray = function (arr, entry) {
+    arr.push(entry.name)
+  }
+
+  if (options && options.includeNames) {
+    addToArray = function (arr, entry) {
+      let nameList = [];
+      for (resident of entry.residents) {
+        if (!("sex" in options) || options.sex === resident.sex) {
+          nameList.push(resident.name)
+        }
+      }
+
+      for (species of arr) {
+        if (entry.name in species) {
+          species[entry.name].push(...nameList)
+          return;
+        }
+      }
+
+      let obj = {}
+      obj[entry.name] = nameList
+      arr.push(obj)
+    }
+  }
+
+  let mapObj = {};
+  for (entry of animals) {
+    if (!(entry.location in mapObj)) {
+      mapObj[entry.location] = []
+    }
+
+    addToArray(mapObj[entry.location], entry)
+  }
+
+  return mapObj
 }
 
 function animalPopularity(rating) {
