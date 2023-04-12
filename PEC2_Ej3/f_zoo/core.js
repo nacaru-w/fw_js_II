@@ -91,15 +91,73 @@ function animalMap(options) {
 }
 
 function animalPopularity(rating) {
-  // your code here
+  let popObj = {}
+  for (let entry of animals) {
+    for (let index = 5; index > 0; index--) {
+      if (entry.popularity == index) {
+        if (popObj.hasOwnProperty([index])) {
+          popObj[index].push(entry.name)
+        } else {
+          popObj[index] = [];
+          popObj[index].push(entry.name)
+        }
+      }
+    }
+  }
+
+  if (!rating) {
+    return popObj
+  }
+
+  return popObj[rating]
+
 }
 
 function animalsByIds(ids) {
-  // your code here
+  let idArr = []
+  if (!ids) {
+    return idArr;
+  }
+
+  if (typeof ids == "string") {
+    for (let entry of animals) {
+      if (ids == entry.id) {
+        idArr.push(entry)
+        return idArr
+      }
+    }
+  }
+
+  if (typeof ids == "object") {
+    for (let entry of animals) {
+      for (let id of ids) {
+        if (id == entry.id) {
+          idArr.push(entry)
+        }
+      }
+    }
+    return idArr
+
+  }
 }
 
 function animalByName(animalName) {
-  // your code here
+  let nameObj = {};
+
+  if (!animalName) {
+    return nameObj
+  }
+
+  for (let entry of animals) {
+    for (let residentFile of entry.residents) {
+      if (animalName == residentFile.name) {
+        nameObj = residentFile;
+        nameObj["species"] = entry.name;
+        return nameObj
+      }
+    }
+  }
+
 }
 
 function employeesByIds(ids) {
