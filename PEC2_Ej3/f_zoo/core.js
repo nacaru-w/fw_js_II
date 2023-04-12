@@ -1,9 +1,42 @@
+const { animals, employees, hours, prices } = require('./data');
+
 function entryCalculator(entrants) {
-  // your code here
+  if (!entrants || Object.keys(entrants).length === 0) {
+    return 0;
+  }
+
+  let totalPrice = Object.entries(entrants).reduce((accumulator, [ageScope, cost]) => {
+    let ageScopePrice = prices[ageScope];
+    if (ageScopePrice) {
+      return accumulator + (ageScopePrice * cost);
+    } else {
+      return accumulator;
+    }
+  }, 0);
+
+  return totalPrice.toFixed(2);
 }
 
 function schedule(dayName) {
-  // your code here
+  function hourConverter(time) {
+    return time > 12 ? time - 12 : time;
+  }
+
+  let finalObject = {}
+  for (day in hours) {
+    if (day !== "Monday") {
+      finalObject[day] = `Open from ${hours[day].open}am until ${hourConverter(hours[day].close)}pm`
+    } else {
+      finalObject[day] = 'CLOSED'
+    }
+  }
+
+  if (!dayName) {
+    return finalObject
+  }
+
+  return { [dayName]: finalObject[dayName] }
+
 }
 
 function animalCount(species) {
