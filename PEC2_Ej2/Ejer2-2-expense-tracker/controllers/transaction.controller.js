@@ -14,7 +14,7 @@ class TransactionController {
 
         // Explicit this binding
         this.service.bindTransactionListChanged(this.onTransactionListChanged);
-        this.view.bindAddTransaction(this.handleAddTransaction);
+        this.view.bindAddTransaction(this.service.addTransaction);
         this.view.bindDeleteTransaction(this.handleDeleteTransaction);
 
         // Display initial transactions
