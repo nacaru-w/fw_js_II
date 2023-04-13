@@ -1,4 +1,4 @@
-const findOne = (list, { key, value }) => {
+const findOne = (list, { key, value }) => { // Esta parte del código no se ha modificado respecto a la versión anterior, he decidido no copiar y pegar los comentarios aquí, ya que se puede volver a ejer1-b si es necesario volver a verlos
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             const element = list.find(element => element[key] === value);

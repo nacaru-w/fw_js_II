@@ -1,4 +1,4 @@
-const findOne = (list, { key, value }) => {
+const findOne = (list, { key, value }) => { // De nuevo, esta parte del código no se ha modificado, por lo que los comentarios que se aplican son los mismos que los de la versión 1-b del ejercicio
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             const element = list.find(element => element[key] === value);
