@@ -68,7 +68,6 @@ class TransactionService {
 
     // Update the balance, income and expense
     updateValues() {
-        // TODO: pensar si va en el servicio o en la callback 
         const amounts = this.transactions.map(transaction => transaction.amount);
 
         const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
