@@ -223,7 +223,37 @@ function managersForEmployee(idOrName) {
 }
 
 function employeeCoverage(idOrName) {
-  // your code here
+  function findFullNameWithID(givenId) {
+    for (let entry of employees) {
+      if (givenId == entry.id) {
+        return `${entry.firstName} ${entry.lastName}`
+      }
+    }
+  }
+  function findAnimalWithID(givenId) {
+    for (let entry of animals) {
+      if (givenId == entry.id) {
+        return `${entry.name}`
+      }
+    }
+  }
+
+  let obj = {}
+
+  for (employeeFile of employees) {
+    let employeeFullName = `${employeeFile.firstName} ${employeeFile.lastName}`
+    obj[employeeFullName] = employeeFile.responsibleFor.map(element => findAnimalWithID(element))
+  }
+
+  if (!idOrName) {
+    return obj
+  }
+
+  for (fullName in obj) {
+    if (fullName.includes(idOrName) || fullName.includes(findFullNameWithID(idOrName))) {
+      return newObj = { [fullName]: obj[fullName] }
+    }
+  }
 }
 
 module.exports = {
